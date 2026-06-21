@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Qué comemos?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff9e6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .contenedor {
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff9800;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .cuadricula-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .opcion-comida {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .opcion-comida:hover {
+            transform: translateY(-5px);
+            border-color: #ff9800;
+            background-color: #fff3e0;
+        }
+
+        .icono {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .nombre-comida {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Botón final de WhatsApp animado */
+        #bloque-confirmacion {
+            display: none;
+            margin-top: 30px;
+            animation: aparecer 0.5s ease forwards;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes aparecer {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <!-- Bloque inicial del menú -->
+        <div id="seccion-menu">
+            <h1>¡Perfecto! Ahora lo más importante...</h1>
+            <p>¿Qué se te antoja comer este fin de semana?</p>
+
+            <div class="cuadricula-menu">
+                <div class="opcion-comida" onclick="elegirMenu('Sushi')">
+                    <span class="icono">🍣</span>
+                    <span class="nombre-comida">Sushi</span>
+                </div>
+                <div class="opcion-comida" onclick="elegirMenu('Pizza')">
+                    <span class="icono">🍕</span>
+                    <span class="nombre-comida">Pizza</span>
+                </div>
+                <div class="opcion-comida" onclick="elegirMenu('Hamburguesas')">
+                    <span class="icono">🍔</span>
+                    <span class="nombre-comida">Hamburguesas</span>
+                </div>
+                <div class="opcion-comida" onclick="elegirMenu('Tacos')">
+                    <span class="icono">🌮</span>
+                    <span class="nombre-comida">Tacos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla final con botón de WhatsApp -->
+        <div id="bloque-confirmacion">
+            <h1 style="color: #25d366;">¡Todo listo! 🤠✨</h1>
+            <p id="resumen-texto" style="font-size: 1.4rem; font-weight: bold; color: #444;"></p>
+            <p>Dale clic abajo para mandarme la confirmación oficial:</p>
+            <a id="enlace-wa" class="btn-whatsapp" target="_blank">Confirmar Cita por WhatsApp 🚀</a>
+        </div>
+    </div>
+
+    <script>
+        function elegirMenu(comida) {
+            // Recuperamos las respuestas de día y hora que guardó la página anterior
+            const dia = localStorage.getItem('diaCita') || "el fin de semana";
+            const hora = localStorage.getItem('horaCita') || "la hora acordada";
+            
+            // ⚠️ REEMPLAZA ESTO: Pon tu número con código de país (Ej de México: "521234567890")
+            const tuTelefono = "1234567890"; 
+
+            // Ocultamos la cuadrícula de comida
+            document.getElementById('seccion-menu').style.display = 'none';
+
+            // Colocamos el texto resumen en la interfaz
+            document.getElementById('resumen-texto').textContent = `Quedamos para comer ${comida} el ${dia} a las ${hora}.`;
+
+            // Construimos el mensaje de texto exacto
+            const mensajeOriginal = `¡Hola! Ya acepté la invitación de Woody panzón. Quedamos el ${dia} a las ${hora} y se me antoja comer ${comida} 🤠✨`;
+            
+            // Convertimos el mensaje a formato web seguro (evita problemas con espacios y emojis)
+            const mensajeEncriptado = encodeURIComponent(mensajeOriginal);
+            
+            // Creamos el enlace final directo a tu chat
+            const enlaceFinal = `https://wa.me{+50239664916}?text=${mensajeEncriptado}`;
+            document.getElementById('enlace-wa').href = enlaceFinal;
+
+            // Mostramos el botón verde de confirmación
+            document.getElementById('bloque-confirmacion').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

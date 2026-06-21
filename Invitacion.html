@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Salgamos?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffe6e6; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .contenedor {
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        /* Animación de la caja vibrando */
+        .caja-sorpresa {
+            width: 150px;
+            height: 150px;
+            background-color: #ff4d4d;
+            border: 4px solid #cc0000;
+            border-radius: 10px;
+            margin: 0 auto;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19);
+            animation: vibrar 0.5s infinite alternate;
+        }
+
+        .caja-sorpresa::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 43%; width: 14%; height: 100%;
+            background-color: #ffd700;
+        }
+
+        .caja-sorpresa::after {
+            content: '';
+            position: absolute;
+            top: 43%; left: 0; width: 100%; height: 14%;
+            background-color: #ffd700;
+        }
+
+        @keyframes vibrar {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        #contenido-sorpresa, #opciones, #opciones-dias {
+            display: none;
+        }
+
+        /*  Woody Panzon */
+        .woody {
+            width: 250px;
+            max-width: 90%;
+            /* Quitado el box-shadow cuadrado y cambiado por sombra de silueta */
+            filter: drop-shadow(0px 12px 15px rgba(0, 0, 0, 0.2));
+            animation: aparecer 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes aparecer {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+
+        .botones {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #btn-si {
+            background-color: #4caf50;
+            color: white;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+        }
+
+        #btn-no {
+            background-color: #f44336;
+            color: white;
+            box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
+        }
+
+        .btn-dia {
+            background-color: #2196f3;
+            color: white;
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <div id="caja" class="caja-sorpresa" onclick="abrirCaja()"></div>
+
+        <div id="contenido-sorpresa">
+            <img class="woody" src="woody-panzon.png" alt="Woody Panzón">
+            <h1 id="texto-principal">¿Salgamos este fin de semana?</h1>
+            
+            <div class="botones" id="opciones">
+                <button id="btn-si" class="btn" onclick="aceptarCita()">Sí</button>
+                <button id="btn-no" class="btn" onclick="rechazarCita()">No</button>
+            </div>
+
+            <div class="botones" id="opciones-dias">
+                <button class="btn btn-dia" onclick="elegirDia('Sábado', '13:00')">Sábado</button>
+                <button class="btn btn-dia" onclick="elegirDia('Domingo', '12:00')">Domingo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let escalaSi = 1;
+        let indiceMensaje = 0;
+        
+        const mensajesNo = [
+            "¿Segura que no? 🥺",
+            "Yo creo que sí quieres... 🤔",
+            "Deberías de pensarlo mejor jajajaja ✨",
+            "¡El boton de Sí es más grande! 😂"
+        ];
+
+        function abrirCaja() {
+            document.getElementById('caja').style.display = 'none';
+            document.getElementById('contenido-sorpresa').style.display = 'block';
+            document.getElementById('opciones').style.display = 'flex';
+        }
+
+        function rechazarCita() {
+            const btnSi = document.getElementById('btn-si');
+            const btnNo = document.getElementById('btn-no');
+            
+            escalaSi += 0.35;
+            btnSi.style.transform = `scale(${escalaSi})`;
+            btnNo.textContent = mensajesNo[indiceMensaje];
+            
+            if (indiceMensaje < mensajesNo.length - 1) {
+                indiceMensaje++;
+            }
+        }
+
+        function aceptarCita() {
+            document.getElementById('texto-principal').textContent = "Sabía que dirías que sí";
+            document.getElementById('opciones').style.display = 'none';
+            
+            setTimeout(() => {
+                document.getElementById('texto-principal').textContent = "¿Sábado o Domingo?";
+                document.getElementById('opciones-dias').style.display = 'flex';
+            }, 1500);
+        }
+
+        function elegirDia(dia, hora) {
+            localStorage.setItem('diaCita', dia);
+            localStorage.setItem('horaCita', hora);
+
+            const texto = document.getElementById('texto-principal');
+            document.getElementById('opciones-dias').style.display = 'none';
+
+            texto.textContent = `¡Perfecto! Paso por ti a las ${hora} 🤠`;
+
+            setTimeout(() => {
+                window.location.href = "menu.html";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
