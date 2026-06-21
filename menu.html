@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Qué comemos?</title>
+    <title>Tienes antojo de???</title>
     <style>
         body {
             margin: 0;
@@ -159,8 +159,9 @@
             const mensajeEncriptado = encodeURIComponent(mensajeOriginal);
             
             // 7. ENLACE CORREGIDO: Usamos la API universal que abre en celulares y PC sin fallas
-            const enlaceFinal = `https://whatsapp.com{50239664916}&text=${mensajeEncriptado}`;
+            const enlaceFinal = `https://wa.me/50239664916`;
             document.getElementById('enlace-wa').href = enlaceFinal;
+
 
             // 8. Revelar el bloque del botón de WhatsApp con animación
             document.getElementById('bloque-confirmacion').style.display = 'block';
