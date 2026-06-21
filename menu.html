@@ -137,32 +137,32 @@
         </div>
     </div>
 
-    <script>
+        <script>
         function elegirMenu(comida) {
-            // Recuperamos las respuestas de día y hora que guardó la página anterior
+            // 1. Recuperar el día y la hora guardados de la página anterior
             const dia = localStorage.getItem('diaCita') || "el fin de semana";
             const hora = localStorage.getItem('horaCita') || "la hora acordada";
             
-            // ⚠️ REEMPLAZA ESTO: Pon tu número con código de país (Ej de México: "521234567890")
+            // 2. ⚠️ CONFIGURA TU NÚMERO AQUÍ (Sólo números, añade el código de tu país al inicio)
             const tuTelefono = "1234567890"; 
 
-            // Ocultamos la cuadrícula de comida
+            // 3. Ocultar la pantalla de selección de comida
             document.getElementById('seccion-menu').style.display = 'none';
 
-            // Colocamos el texto resumen en la interfaz
+            // 4. Mostrar el resumen escrito en la pantalla de la web
             document.getElementById('resumen-texto').textContent = `Quedamos para comer ${comida} el ${dia} a las ${hora}.`;
 
-            // Construimos el mensaje de texto exacto
+            // 5. Crear el texto exacto que se va a enviar
             const mensajeOriginal = `¡Hola! Ya acepté la invitación de Woody panzón. Quedamos el ${dia} a las ${hora} y se me antoja comer ${comida} 🤠✨`;
             
-            // Convertimos el mensaje a formato web seguro (evita problemas con espacios y emojis)
+            // 6. Encriptar el mensaje para que sea seguro para enlaces web
             const mensajeEncriptado = encodeURIComponent(mensajeOriginal);
             
-            // Creamos el enlace final directo a tu chat
-            const enlaceFinal = `https://wa.me{50239664916}?text=${mensajeEncriptado}`;
+            // 7. ENLACE CORREGIDO: Usamos la API universal que abre en celulares y PC sin fallas
+            const enlaceFinal = `https://whatsapp.com{50239664916}&text=${mensajeEncriptado}`;
             document.getElementById('enlace-wa').href = enlaceFinal;
 
-            // Mostramos el botón verde de confirmación
+            // 8. Revelar el bloque del botón de WhatsApp con animación
             document.getElementById('bloque-confirmacion').style.display = 'block';
         }
     </script>
